@@ -1,0 +1,12 @@
+spring:
+  # ?? dev|test|prod
+  profiles:
+    active: dev
+  application:
+    name: johnie-boot
+  jackson:
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
