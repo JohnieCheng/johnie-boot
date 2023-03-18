@@ -12,15 +12,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.johnie</groupId>
-            <artifactId>johnie-framework</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 </project>
