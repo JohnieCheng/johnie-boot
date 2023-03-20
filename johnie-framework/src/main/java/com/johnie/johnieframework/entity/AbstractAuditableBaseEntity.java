@@ -2,6 +2,7 @@ package com.johnie.johnieframework.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
-public abstract class AbstractAuditableBaseEntity<U> {
+public abstract class AbstractAuditableBaseEntity<U> implements Serializable {
   @Id
   @SequenceGenerator(name = "seq_id", sequenceName = "seq_id", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")

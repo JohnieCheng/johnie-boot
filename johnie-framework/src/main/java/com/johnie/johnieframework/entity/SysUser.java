@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.entity;
 
-import com.johnie.johnieframework.entity.AbstractAuditableBaseEntity;import jakarta.persistence.*;
+import jakarta.persistence.*;
 import java.util.Collection;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SysUserEntity extends AbstractAuditableBaseEntity<String> implements UserDetails {
+public class SysUser extends AbstractAuditableBaseEntity<String> implements UserDetails {
   private String email;
   private String password;
 

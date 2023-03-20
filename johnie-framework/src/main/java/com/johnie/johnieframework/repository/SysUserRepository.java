@@ -1,9 +1,9 @@
 package com.johnie.johnieframework.repository;
 
-import com.johnie.johnieframework.entity.SysUserEntity;
+import com.johnie.johnieframework.entity.SysUser;
 import java.util.Optional;
 
-public interface SysUserRepository extends BaseRepository<SysUserEntity, Long> {
+public interface SysUserRepository extends BaseRepository<SysUser, Long> {
 
-  Optional<SysUserEntity> findByEmail(String email);
+  Optional<SysUser> findByEmail(String email);
 }

@@ -1,5 +1,6 @@
-package com.johnie.johnieframework.security.service;
+package com.johnie.johnieframework.security.service.impl;
 
+import com.johnie.johnieframework.security.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
