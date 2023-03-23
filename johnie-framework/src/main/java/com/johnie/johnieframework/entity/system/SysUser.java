@@ -22,6 +22,7 @@ public class SysUser extends AbstractAuditableBaseEntity<String> implements User
   @OneToOne(
       targetEntity = SysEmployee.class,
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+  @MapsId
   private SysEmployee employee;
 
   @OneToMany(
