@@ -1,6 +1,7 @@
 package com.johnie.johnieframework.security.config;
 
 import com.johnie.johnieframework.security.filter.JwtAuthenticationFilter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +19,17 @@ public class SecurityConfig {
   private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
 
+  private final PermitResource permitResource;
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // 忽略授权的地址列表
+    List<String> permitList = permitResource.getPermitList();
+    String[] permits = permitList.toArray(new String[0]);
     http.csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/api/v1/auth/**")
+        .requestMatchers(permits)
         .permitAll()
         .anyRequest()
         .authenticated()
