@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.security.config;
 
-import com.johnie.johnieframework.repository.SysUserRepository;
+import com.johnie.johnieframework.security.repository.SysAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @RequiredArgsConstructor
 public class UserDetailsServiceConfig {
 
-  final SysUserRepository userRepository;
+  final SysAuthRepository authRepository;
 
   @Bean
   public UserDetailsService userDetailsService() {
     return username ->
-        userRepository
+        authRepository
             .findByEmail(username)
             .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
   }

@@ -1,12 +1,12 @@
 package com.johnie.johnieframework.security.service.impl;
 
-import com.johnie.johnieframework.entity.SysUser;
-import com.johnie.johnieframework.repository.SysUserRepository;
+import com.johnie.johniecommon.vo.AuthRequest;
+import com.johnie.johniecommon.vo.AuthResponse;
+import com.johnie.johniecommon.vo.RegisterUserVo;
+import com.johnie.johnieframework.entity.system.SysUser;
+import com.johnie.johnieframework.security.repository.SysAuthRepository;
 import com.johnie.johnieframework.security.service.JwtService;
 import com.johnie.johnieframework.security.service.SysAuthService;
-import com.johnie.johnieframework.vo.AuthRequest;
-import com.johnie.johnieframework.vo.AuthResponse;
-import com.johnie.johnieframework.vo.RegisterUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SysAuthServiceImpl implements SysAuthService {
-  private final SysUserRepository sysUserRepository;
+  private final SysAuthRepository sysAuthRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
@@ -25,7 +25,7 @@ public class SysAuthServiceImpl implements SysAuthService {
   public AuthResponse authenticate(AuthRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-    SysUser sysUser = sysUserRepository.findByEmail(request.getEmail()).orElseThrow();
+    SysUser sysUser = sysAuthRepository.findByEmail(request.getEmail()).orElseThrow();
     String jwt = jwtService.generateToken(sysUser);
     return AuthResponse.builder().accessToken(jwt).build();
   }
@@ -37,7 +37,7 @@ public class SysAuthServiceImpl implements SysAuthService {
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .build();
-    sysUserRepository.save(userDetail);
+    sysAuthRepository.save(userDetail);
     String jwtToken = jwtService.generateToken(userDetail);
     return AuthResponse.builder().accessToken(jwtToken).build();
   }

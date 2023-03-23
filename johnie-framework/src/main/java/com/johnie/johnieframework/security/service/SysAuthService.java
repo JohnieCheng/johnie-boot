@@ -1,8 +1,8 @@
 package com.johnie.johnieframework.security.service;
 
-import com.johnie.johnieframework.vo.AuthRequest;
-import com.johnie.johnieframework.vo.AuthResponse;
-import com.johnie.johnieframework.vo.RegisterUserVo;
+import com.johnie.johniecommon.vo.AuthRequest;
+import com.johnie.johniecommon.vo.AuthResponse;
+import com.johnie.johniecommon.vo.RegisterUserVo;
 
 public interface SysAuthService {
   AuthResponse register(RegisterUserVo request);

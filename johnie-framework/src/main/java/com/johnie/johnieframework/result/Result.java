@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.result;
 
-import com.johnie.johnieframework.exception.ErrorCode;
+import com.johnie.johniecommon.enums.ErrorCode;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
