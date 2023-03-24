@@ -35,4 +35,17 @@ public class UserController {
     UserVo user = this.sysUserService.save(dto);
     return ResponseEntity.status(HttpStatus.OK).body(user);
   }
+
+  @PutMapping()
+  public ResponseEntity<UserVo> updateUser(@RequestBody UserVo userVo) {
+    UserDTO dto = UserConvert.INSTANCE.toDTO(userVo);
+    UserVo user = this.sysUserService.update(dto);
+    return ResponseEntity.status(HttpStatus.OK).body(user);
+  }
+
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<Boolean> updateUser(@PathVariable Long id) {
+    this.sysUserService.delete(id);
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
 }

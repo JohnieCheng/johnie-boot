@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.security.service.impl;
 
-import com.johnie.johniecommon.vo.AuthRequest;
+import com.johnie.johniecommon.exception.ServerException;import com.johnie.johniecommon.vo.AuthRequest;
 import com.johnie.johniecommon.vo.AuthResponse;
 import com.johnie.johniecommon.vo.RegisterUserVo;
 import com.johnie.johnieframework.entity.system.User;
@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
   public AuthResponse authenticate(AuthRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-    User user = authRepository.findByEmail(request.getEmail()).orElseThrow();
+    User user = authRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ServerException(""));
     String jwt = jwtService.generateToken(user);
     return AuthResponse.builder().accessToken(jwt).build();
   }

@@ -1,6 +1,7 @@
 package com.johnie.johnieframework.service.system.impl;
 
 import com.johnie.johniecommon.dto.UserDTO;
+import com.johnie.johniecommon.enums.ErrorCode;
 import com.johnie.johniecommon.exception.ServerException;
 import com.johnie.johniecommon.vo.UserVo;
 import com.johnie.johnieframework.convert.UserConvert;
@@ -38,5 +39,24 @@ public class SysUserServiceImpl implements SysUserService {
     User sysUser = UserConvert.INSTANCE.toEntity(dto);
     User user = userRepository.save(sysUser);
     return UserConvert.INSTANCE.toVo(user);
+  }
+
+  @Override
+  public UserVo update(UserDTO dto) {
+    User user = UserConvert.INSTANCE.toEntity(dto);
+    Long id = dto.getId();
+    User userEntity =
+        userRepository
+            .findById(id)
+            .orElseThrow(() -> new ServerException(ErrorCode.USER_ACCOUNT_NOT_EXIST));
+    //    BeanUtils.copyProperties(dto,userEntity);
+    userEntity.setRole(user.getRole());
+    userEntity.setEmployee(user.getEmployee());
+    return UserConvert.INSTANCE.toVo(userEntity);
+  }
+
+  @Override
+  public void delete(Long id) {
+    userRepository.deleteById(id);
   }
 }

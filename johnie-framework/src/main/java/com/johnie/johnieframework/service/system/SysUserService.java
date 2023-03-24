@@ -8,5 +8,9 @@ public interface SysUserService {
   UserVo getVoById(Long id);
 
   Page<UserVo> getUserVosByPage(Integer pageIndex, Integer pageSize);
-UserVo save(UserDTO dto);
+
+  UserVo save(UserDTO dto);
+
+  UserVo update(UserDTO dto);
+void delete(Long id);
 }
