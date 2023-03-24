@@ -14,23 +14,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SysUser extends AbstractAuditableBaseEntity<String> implements UserDetails {
+public class User extends AbstractAuditableBaseEntity<String> implements UserDetails {
   private String email;
   private String password;
 
   @ToString.Exclude
   @OneToOne(
-      targetEntity = SysEmployee.class,
+      mappedBy = "user",
+      targetEntity = Employee.class,
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
-  @MapsId
-  private SysEmployee employee;
+  private Employee employee;
 
   @OneToMany(
-      targetEntity = SysRole.class,
+      targetEntity = Role.class,
       mappedBy = "user",
       fetch = FetchType.EAGER,
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
-  private List<SysRole> role;
+  private List<Role> role;
 
   @Version private long version;
 

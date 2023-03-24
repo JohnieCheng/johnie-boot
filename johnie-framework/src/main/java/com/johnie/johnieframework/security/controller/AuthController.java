@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.security.controller;
 
-import com.johnie.johnieframework.security.service.SysAuthService;
+import com.johnie.johnieframework.security.service.AuthService;
 import com.johnie.johniecommon.vo.AuthRequest;
 import com.johnie.johniecommon.vo.AuthResponse;
 import com.johnie.johniecommon.vo.RegisterUserVo;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class SysAuthController {
+public class AuthController {
 
-  private final SysAuthService service;
+  private final AuthService service;
 
   @PostMapping("register")
   public ResponseEntity<AuthResponse> register(@RequestBody RegisterUserVo request) {

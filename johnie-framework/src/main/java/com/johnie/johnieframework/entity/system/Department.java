@@ -3,7 +3,8 @@ package com.johnie.johnieframework.entity.system;
 import com.johnie.johniecommon.entity.AbstractAuditableBaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.*;
 
@@ -13,14 +14,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SysPermission extends AbstractAuditableBaseEntity<String> {
-  private String expression;
+public class Department extends AbstractAuditableBaseEntity<String> {
   private String name;
+  private String no;
 
   @ToString.Exclude
-  @ManyToMany(
-      mappedBy = "permissions",
+  @OneToMany(
+      mappedBy = "department",
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH},
-      targetEntity = SysRole.class)
-  private List<SysRole> roles;
+      fetch = FetchType.LAZY,
+      targetEntity = Employee.class)
+  private List<Employee> employees;
 }

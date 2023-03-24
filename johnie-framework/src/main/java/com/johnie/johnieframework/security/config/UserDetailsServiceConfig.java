@@ -1,6 +1,6 @@
 package com.johnie.johnieframework.security.config;
 
-import com.johnie.johnieframework.security.repository.SysAuthRepository;
+import com.johnie.johnieframework.security.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @RequiredArgsConstructor
 public class UserDetailsServiceConfig {
 
-  final SysAuthRepository authRepository;
+  final AuthRepository authRepository;
 
   @Bean
   public UserDetailsService userDetailsService() {

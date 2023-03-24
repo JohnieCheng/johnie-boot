@@ -5,4 +5,4 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/v1/role")
-public class SysRoleController {}
+public class RoleController {}

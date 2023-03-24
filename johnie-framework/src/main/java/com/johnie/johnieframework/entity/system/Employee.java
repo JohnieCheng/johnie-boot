@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SysEmployee extends AbstractAuditableBaseEntity<String> {
+public class Employee extends AbstractAuditableBaseEntity<String> {
   private String name;
   private String password;
   private String email;
@@ -21,14 +21,14 @@ public class SysEmployee extends AbstractAuditableBaseEntity<String> {
   @ManyToOne(
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH},
       fetch = FetchType.LAZY,
-      targetEntity = SysDepartment.class)
-  @JoinColumn(name = "department_fk")
-  private SysDepartment department;
+      targetEntity = Department.class)
+  @JoinColumn(name = "department_id")
+  private Department department;
 
   @ToString.Exclude
   @OneToOne(
-      mappedBy = "employee",
-      targetEntity = SysUser.class,
+      fetch = FetchType.LAZY,
+      targetEntity = User.class,
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
-  private SysUser user;
+  private User user;
 }

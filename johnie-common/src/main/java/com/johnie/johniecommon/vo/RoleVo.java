@@ -5,7 +5,9 @@ import lombok.Data;
 
 @Data
 public class RoleVo {
-    private String name;
-    private String no;
-    private List<PermissionVo> sysPermissions;
+  private Long id;
+  private String name;
+  private String no;
+  private List<PermissionVo> permissions;
+  private UserVo user;
 }

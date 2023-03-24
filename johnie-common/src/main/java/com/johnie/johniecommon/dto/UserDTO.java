@@ -1,14 +1,14 @@
-package com.johnie.johniecommon.vo;
+package com.johnie.johniecommon.dto;
 
 import java.util.List;
 import lombok.Data;
 
 @Data
-public class UserVo {
+public class UserDTO {
   private Long id;
   private String email;
   private String password;
-  private List<RoleVo> role;
-  private EmployeeVo employee;
+  private List<RoleDTO> role;
+  private EmployeeDTO employee;
   private long version;
 }

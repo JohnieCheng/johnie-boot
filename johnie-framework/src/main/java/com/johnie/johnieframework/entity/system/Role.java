@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SysRole extends AbstractAuditableBaseEntity<String> {
+public class Role extends AbstractAuditableBaseEntity<String> {
 
   private String name;
   private String no;
@@ -20,12 +20,12 @@ public class SysRole extends AbstractAuditableBaseEntity<String> {
   @ManyToMany(
       fetch = FetchType.EAGER,
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH},
-      targetEntity = SysPermission.class)
-  private List<SysPermission> permissions;
+      targetEntity = Permission.class)
+  private List<Permission> permissions;
 
-  @ManyToOne(targetEntity = SysUser.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_fk")
-  private SysUser user;
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User user;
   //  @JoinTable(
   //      name = "sys_role_sys_permission", // 中间表的名称
   //      // 中间表teacher_users的字段teachers_id关联teacher表的主键字段id
