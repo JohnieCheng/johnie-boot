@@ -1,6 +1,7 @@
 package com.johnie.johnieframework.security.service.impl;
 
-import com.johnie.johniecommon.exception.ServerException;import com.johnie.johniecommon.vo.AuthRequest;
+import com.johnie.johniecommon.exception.ServerException;
+import com.johnie.johniecommon.vo.AuthRequest;
 import com.johnie.johniecommon.vo.AuthResponse;
 import com.johnie.johniecommon.vo.RegisterUserVo;
 import com.johnie.johnieframework.entity.system.User;
@@ -16,29 +17,24 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-  private final AuthRepository authRepository;
-  private final PasswordEncoder passwordEncoder;
-  private final JwtService jwtService;
-  private final AuthenticationManager authenticationManager;
+    private final AuthRepository authRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-  @Override
-  public AuthResponse authenticate(AuthRequest request) {
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-    User user = authRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ServerException(""));
-    String jwt = jwtService.generateToken(user);
-    return AuthResponse.builder().accessToken(jwt).build();
-  }
+    @Override
+    public AuthResponse authenticate(AuthRequest request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        User user = authRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ServerException(""));
+        String jwt = jwtService.generateToken(user);
+        return AuthResponse.builder().accessToken(jwt).build();
+    }
 
-  @Override
-  public AuthResponse register(RegisterUserVo request) {
-    User userDetail =
-        User.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .build();
-    authRepository.save(userDetail);
-    String jwtToken = jwtService.generateToken(userDetail);
-    return AuthResponse.builder().accessToken(jwtToken).build();
-  }
+    @Override
+    public AuthResponse register(RegisterUserVo request) {
+        User userDetail = User.builder().email(request.getEmail()).password(passwordEncoder.encode(request.getPassword())).build();
+        authRepository.save(userDetail);
+        String jwtToken = jwtService.generateToken(userDetail);
+        return AuthResponse.builder().accessToken(jwtToken).build();
+    }
 }
