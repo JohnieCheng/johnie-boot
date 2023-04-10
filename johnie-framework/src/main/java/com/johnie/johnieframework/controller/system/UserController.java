@@ -30,7 +30,7 @@ public class UserController {
   }
 
   @PostMapping()
-  public ResponseEntity<UserVo> getUsers(@RequestBody UserVo userVo) {
+  public ResponseEntity<UserVo> addUser(@RequestBody UserVo userVo) {
     UserDTO dto = UserConvert.INSTANCE.toDTO(userVo);
     UserVo user = this.sysUserService.save(dto);
     return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -44,7 +44,7 @@ public class UserController {
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<Boolean> updateUser(@PathVariable Long id) {
+  public ResponseEntity<Boolean> deleteUser(@PathVariable Long id) {
     this.sysUserService.delete(id);
     return ResponseEntity.status(HttpStatus.OK).build();
   }

@@ -18,27 +18,33 @@ Content-Type: application/json
 }
 
 > {%
-    client.global.set("accessToken", response.headers.valuesOf("accessToken")[0]);
+    client.global.set("accessToken", response.body["accessToken"]);
 %}
 
 ### 删除用户
 < {%
-    request.variables.set("auth_token",
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huaWVjaGVuZ0BnbWFpbC5jb20iLCJpYXQiOjE2Nzk2NTAwNzcsImV4cCI6MTY3OTY1MTUxN30.rnDqw5SY1rGwgMHoJkTPZ9_iezb70HjE2tt82wN2BWY")
+    request.variables.set("auth_token", client.global.get("accessToken"))
 %}
-DELETE http://localhost:9090/api/v1/user/1
+DELETE http://localhost:9090/api/v1/user/4
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 ### 添加用户
 < {%
-    request.variables.set("auth_token",
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huaWVjaGVuZ0BnbWFpbC5jb20iLCJpYXQiOjE2Nzk2NTAwNzcsImV4cCI6MTY3OTY1MTUxN30.rnDqw5SY1rGwgMHoJkTPZ9_iezb70HjE2tt82wN2BWY")
+    request.variables.set("auth_token", client.global.get("accessToken"))
 %}
 POST http://localhost:9090/api/v1/user
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-
+  "email": "johniecheng1@gmail.com",
+  "password": "$2a$10$54CNo2AiAmSpTIEeAZgOJ.pZTwXTSCruHsp24kXtQMBUkLY9yMk/O",
+  "role": [],
+  "version": 0,
+  "id": null,
+  "createBy": "johnie",
+  "createDate": 1681117610550,
+  "updateBy": "johnie",
+  "updateDate": 1681117610550
 }
