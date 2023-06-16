@@ -16,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SysAuthController {
 
-  private final SysAuthService service;
+    private final SysAuthService service;
 
-  @PostMapping("register")
-  public ResponseEntity<SysAuthResponse> register(@RequestBody RegisterUserVo request) {
-    return ResponseEntity.ok(service.register(request));
-  }
+    @PostMapping("register")
+    public ResponseEntity<Object> register(@RequestBody RegisterUserVo request) {
+        service.register(request);
+        return ResponseEntity.ok().build();
+    }
 
-  @PostMapping("authenticate")
-  public ResponseEntity<SysAuthResponse> authenticate(@RequestBody AuthRequest request) {
-    return ResponseEntity.ok(service.authenticate(request));
-  }
+    @PostMapping("login")
+    public ResponseEntity<SysAuthResponse> login(@RequestBody AuthRequest request) {
+        return ResponseEntity.ok(service.login(request));
+    }
 }

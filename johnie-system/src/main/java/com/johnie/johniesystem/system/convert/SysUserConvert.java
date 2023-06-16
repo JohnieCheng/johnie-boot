@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface SysUserConvert extends BaseConverter<SysUser, UserDetail> {
 
 //    UserDetail toUserDetail(SysUser sysUser);

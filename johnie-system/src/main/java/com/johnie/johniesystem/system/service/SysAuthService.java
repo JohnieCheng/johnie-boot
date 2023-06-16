@@ -6,7 +6,7 @@ import com.johnie.johniesystem.system.vo.SysAuthResponse;
 import com.johnie.johniesystem.system.vo.RegisterUserVo;
 
 public interface SysAuthService {
-  SysAuthResponse register(RegisterUserVo request);
+  void register(RegisterUserVo request);
 
-  SysAuthResponse authenticate(AuthRequest request);
+  SysAuthResponse login(AuthRequest request);
 }

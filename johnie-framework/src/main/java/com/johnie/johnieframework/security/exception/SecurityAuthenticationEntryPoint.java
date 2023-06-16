@@ -24,8 +24,7 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
 
         response.getWriter()
                 .print(JsonUtils.toJsonString(
-                                ResponseEntity.status(ErrorCode.UNAUTHORIZED.getCode())
-                                        .body(ErrorCode.UNAUTHORIZED)
+                                ResponseEntity.status(ErrorCode.UNAUTHORIZED.getCode()).build()
                         )
                 );
     }

@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 @Getter
 @AllArgsConstructor
-public enum GenderEnum {
+public enum UserGenderEnum {
     /**
      * 男
      */
@@ -28,7 +28,7 @@ public enum GenderEnum {
     private final String name;
 
     public static String getNameByValue(int value) {
-        for (GenderEnum s : GenderEnum.values()) {
+        for (UserGenderEnum s : UserGenderEnum.values()) {
             if (s.getValue() == value) {
                 return s.getName();
             }
@@ -37,7 +37,7 @@ public enum GenderEnum {
     }
 
     public static Integer getValueByName(String name) {
-        for (GenderEnum s : GenderEnum.values()) {
+        for (UserGenderEnum s : UserGenderEnum.values()) {
             if (Objects.equals(s.getName(), name)) {
                 return s.getValue();
             }

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
@@ -35,16 +36,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        final String userEmail;
+        final String username;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
 
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetail userDetail = tokenStoreCache.getUser(userEmail);
+        // 获取登录用户信息
+        UserDetail user = tokenStoreCache.getUser(jwt);
+        if (user == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        username = jwtService.extractUsername(jwt);
+
+        if (StringUtils.hasLength(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetail userDetail = tokenStoreCache.getUser(username);
             if (jwtService.isTokenValid(jwt, userDetail)) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(

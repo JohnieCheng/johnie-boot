@@ -5,6 +5,7 @@ import com.johnie.johniesystem.system.convert.SysUserConvert;
 import com.johnie.johniesystem.system.entity.SysUser;
 import com.johnie.johniesystem.system.repository.SysAuthRepository;
 import com.johnie.johniesystem.system.service.SysUserDetailsService;
+import com.johnie.johniesystem.system.service.SysUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class SysUserDetailsServiceImpl implements SysUserDetailsService {
     private final SysUserConvert sysUserConvert;
+    private final SysUserService sysUserService;
 
     @Override
     public UserDetails getUserDetails(SysUser user) {
@@ -41,5 +43,10 @@ public class SysUserDetailsServiceImpl implements SysUserDetailsService {
 //        userDetail.setAuthoritySet(authoritySet);
 
         return userDetail;
+    }
+
+    @Override
+    public UserDetail loadUserByUsername(String username) {
+        return sysUserService.getSysUser(username);
     }
 }
