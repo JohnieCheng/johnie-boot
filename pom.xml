@@ -18,7 +18,7 @@
     <modules>
         <module>johnie-server</module>
         <module>johnie-framework</module>
-        <module>johnie-common</module>
+        <module>johnie-system</module>
     </modules>
 
     <properties>
