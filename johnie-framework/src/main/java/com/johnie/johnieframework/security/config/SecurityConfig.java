@@ -1,14 +1,27 @@
 package com.johnie.johnieframework.security.config;
 
+import com.johnie.johnieframework.security.exception.SecurityAuthenticationEntryPoint;
 import com.johnie.johnieframework.security.filter.JwtAuthenticationFilter;
+
+import java.util.ArrayList;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -16,29 +29,52 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-  private final JwtAuthenticationFilter jwtAuthFilter;
-  private final AuthenticationProvider authenticationProvider;
-  private final PermitResource permitResource;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final PermitResource permitResource;
+    private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    // 忽略授权的地址列表
-    List<String> permitList = permitResource.getPermitList();
-    String[] permits = permitList.toArray(new String[0]);
-    http.csrf()
-        .disable()
-        .authorizeHttpRequests()
-        .requestMatchers(permits)
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-  }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        List<AuthenticationProvider> providerList = new ArrayList<>();
+        providerList.add(daoAuthenticationProvider());
+//        providerList.add(mobileAuthenticationProvider());
+
+        ProviderManager providerManager = new ProviderManager(providerList);
+        providerManager.setAuthenticationEventPublisher(new DefaultAuthenticationEventPublisher(applicationEventPublisher));
+
+        return providerManager;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // 忽略授权的地址列表
+        List<String> permitList = permitResource.getPermitList();
+        String[] permits = permitList.toArray(new String[0]);
+
+        http
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeHttpRequests(auth -> auth
+                        .requestMatchers(permits).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling().authenticationEntryPoint(new SecurityAuthenticationEntryPoint())
+                .and().headers().frameOptions().disable()
+                .and().csrf(AbstractHttpConfigurer::disable)
+        ;
+
+        return http.build();
+    }
 }

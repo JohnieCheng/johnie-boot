@@ -25,7 +25,7 @@ Content-Type: application/json
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
 %}
-DELETE http://localhost:9090/api/v1/user/4
+DELETE http://localhost:9090/api/v1/sysUser/4
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -33,7 +33,7 @@ Content-Type: application/json
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
 %}
-POST http://localhost:9090/api/v1/user
+POST http://localhost:9090/api/v1/sysUser
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
