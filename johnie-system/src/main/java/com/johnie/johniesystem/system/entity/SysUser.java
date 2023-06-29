@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
+import java.util.Set;
 
 /**
  * 登录用户信息
@@ -30,6 +31,11 @@ public class SysUser extends AbstractAuditableBaseEntity<String> {
     private String mobile;
     private Integer status;
     private Integer superAdmin;
+    /**
+     * 拥有权限集合
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> authoritySet;
     @Version
     private long version;
 }

@@ -1,10 +1,19 @@
 
-### 注册
+### 注册1
 POST http://localhost:9090/api/v1/auth/register
 Content-Type: application/json
 
 {
   "username": "johniecheng@gmail.com",
+  "password": "Cheng123456"
+}
+
+### 注册2
+POST http://localhost:9090/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username": "johnieZhang@gmail.com",
   "password": "Cheng123456"
 }
 
@@ -24,8 +33,9 @@ Content-Type: application/json
 ### 删除用户
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
+
 %}
-DELETE http://localhost:9090/api/v1/sys-user/1
+DELETE http://localhost:9090/api/v1/sys-user/2
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 

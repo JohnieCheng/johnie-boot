@@ -16,6 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+
 @Service
 @RequiredArgsConstructor
 public class SysAuthServiceImpl implements SysAuthService {
@@ -40,6 +44,7 @@ public class SysAuthServiceImpl implements SysAuthService {
         UserDetail userDetail = UserDetail.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .authoritySet(new HashSet<>(Arrays.asList("sys")))
                 .build();
         sysUserService.register(userDetail);
     }
