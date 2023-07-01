@@ -7,7 +7,7 @@ import com.johnie.johniesystem.system.entity.SysUser;
 import com.johnie.johniesystem.system.vo.UserVo;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface SysUserConvert extends BaseConverter<SysUser, UserDetail> {
 
 //    UserDetail toUserDetail(SysUser sysUser);

@@ -3,18 +3,11 @@ package com.johnie.johniesystem.system.service.impl;
 import com.johnie.johnieframework.security.user.UserDetail;
 import com.johnie.johniesystem.system.convert.SysUserConvert;
 import com.johnie.johniesystem.system.entity.SysUser;
-import com.johnie.johniesystem.system.repository.SysAuthRepository;
 import com.johnie.johniesystem.system.service.SysUserDetailsService;
 import com.johnie.johniesystem.system.service.SysUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.util.List;
-import java.util.Set;
 
 /**
  * 用户 UserDetails 信息
@@ -47,6 +40,6 @@ public class SysUserDetailsServiceImpl implements SysUserDetailsService {
 
     @Override
     public UserDetail loadUserByUsername(String username) {
-        return sysUserService.getSysUser(username);
+        return sysUserService.loadUserByUsername(username);
     }
 }

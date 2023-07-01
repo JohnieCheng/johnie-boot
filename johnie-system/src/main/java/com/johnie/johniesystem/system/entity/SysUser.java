@@ -5,7 +5,9 @@ import com.johnie.johnieframework.jpa.entity.AbstractAuditableBaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.management.relation.Role;
 import java.io.Serial;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,17 +27,22 @@ public class SysUser extends AbstractAuditableBaseEntity<String> {
     private String realName;
     private String password;
     private String avatar;
-    @ToString.Exclude
-    @ManyToOne(targetEntity = SysDepartment.class, fetch = FetchType.LAZY)
-    private SysDepartment sysDepartment;
     private String mobile;
     private Integer status;
     private Integer superAdmin;
+    @ToString.Exclude
+    @ManyToOne(targetEntity = SysDepartment.class, fetch = FetchType.LAZY)
+    private SysDepartment sysDepartment;
     /**
      * 拥有权限集合
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> authoritySet;
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private Set<String> authoritySet;
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.REFRESH},
+            targetEntity = SysRole.class)
+    private List<SysRole> sysRoles;
     @Version
     private long version;
 }

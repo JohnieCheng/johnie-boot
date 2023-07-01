@@ -3,28 +3,38 @@ package com.johnie.johniesystem.system.service.impl;
 import com.johnie.johnieframework.common.exception.ErrorCode;
 import com.johnie.johnieframework.common.exception.ServerException;
 import com.johnie.johnieframework.security.user.UserDetail;
+import com.johnie.johniesystem.system.entity.SysDepartment;
+import com.johnie.johniesystem.system.entity.SysPermission;
+import com.johnie.johniesystem.system.entity.SysRole;
 import com.johnie.johniesystem.system.entity.SysUser;
 import com.johnie.johniesystem.system.convert.SysUserConvert;
 import com.johnie.johniesystem.system.dto.UserDTO;
 
 import com.johnie.johniesystem.system.repository.SysUserRepository;
+import com.johnie.johniesystem.system.service.SysDepartmentService;
+import com.johnie.johniesystem.system.service.SysRoleService;
 import com.johnie.johniesystem.system.service.SysUserService;
 import com.johnie.johniesystem.system.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SysUserServiceImpl implements SysUserService {
     final SysUserRepository userRepository;
     final SysUserConvert sysUserConvert;
+    final SysDepartmentService sysDepartmentService;
+    final SysRoleService sysRoleService;
 
     @Override
     public UserVo getVoById(Long id) {
@@ -67,14 +77,28 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public UserDetail getSysUser(String username) {
+    public UserDetail loadUserByUsername(String username) {
         SysUser sysUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(""));
-        return sysUserConvert.sourceToTarget(sysUser);
+        UserDetail userDetail = sysUserConvert.sourceToTarget(sysUser);
+        Set<String> authoritySet = sysUser.getSysRoles().stream().flatMap(sysRole -> sysRole.getSysPermissions().stream())
+                .map(SysPermission::getExpression).collect(Collectors.toSet());
+        userDetail.setAuthoritySet(authoritySet);
+        return userDetail;
     }
 
     @Override
     public void register(UserDetail userDetail) {
-        SysUser sysUser = sysUserConvert.targetToSource(userDetail);
+//        SysUser sysUser = sysUserConvert.targetToSource(userDetail);
+        SysUser sysUser = new SysUser();
+        sysUser.setUsername(userDetail.getUsername());
+        sysUser.setPassword(userDetail.getPassword());
+        String departmentNo = userDetail.getDepartmentNo();
+        SysDepartment sysDepartment = sysDepartmentService.findByNo(departmentNo);
+        sysUser.setSysDepartment(sysDepartment);
+        String roleNo = userDetail.getRoleNo();
+        Set<String> roleNoSet = Arrays.stream(roleNo.split(",")).collect(Collectors.toSet());
+        List<SysRole> sysRoles = sysRoleService.findByNoIn(roleNoSet);
+        sysUser.setSysRoles(sysRoles);
         sysUser.setStatus(1);
         userRepository.save(sysUser);
     }

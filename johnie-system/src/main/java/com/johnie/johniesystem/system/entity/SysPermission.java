@@ -23,8 +23,7 @@ public class SysPermission extends AbstractAuditableBaseEntity<String> {
 
   @ToString.Exclude
   @ManyToMany(
-      mappedBy = "sysPermissions",
       cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH},
-      targetEntity = SysRole.class)
+      targetEntity = SysRole.class,mappedBy = "sysPermissions")
   private List<SysRole> sysRoles;
 }

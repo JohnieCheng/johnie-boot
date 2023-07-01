@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class RegisterUserVo {
-  private String username;
-  private String password;
+    private String username;
+    private String password;
+    private String departmentNo;
+    private String roleNo;
 }

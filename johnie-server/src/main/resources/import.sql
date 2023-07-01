@@ -1,1 +1,6 @@
 -- insert into t_user(id, create_by, create_date, update_by, update_date, email, "password", "version")values (nextval('seq_id'), 'johnie', '2023-03-23 14:47:47.606', 'johnie', '2023-03-23 14:47:47.606','johniecheng@gmail.com','$2a$10$bZMSUzUQTBK94IrrLEo0IuaeKopXBgLmsw8xSm4ANqJeLP1fSQaX2', 0);
+
+insert into t_sys_role(id, create_by, create_date, update_by, update_date, name, no)values (nextval('seq_id'), 'johnie', '2023-03-23 14:47:47.606', 'johnie', '2023-03-23 14:47:47.606','员工','10001');
+insert into t_sys_department(id, create_by, create_date, update_by, update_date, name, no)values (nextval('seq_id'), 'johnie', '2023-03-23 14:47:47.606', 'johnie', '2023-03-23 14:47:47.606','采购部门','1001');
+insert into t_sys_permission(id, create_by, create_date, update_by, update_date, expression, name) VALUES (nextval('seq_id'), 'johnie', '2023-03-23 14:47:47.606', 'johnie', '2023-03-23 14:47:47.606','sys::update','1000001');
+insert into t_sys_role_sys_permission(sys_roles_id, sys_permissions_id)VALUES ( (select r.id from t_sys_role r where r.no = '10001'),(select p.id from t_sys_permission p where p.name = '1000001'));

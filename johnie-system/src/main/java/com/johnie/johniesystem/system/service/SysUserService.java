@@ -4,7 +4,6 @@ import com.johnie.johnieframework.security.user.UserDetail;
 import com.johnie.johniesystem.system.dto.UserDTO;
 import com.johnie.johniesystem.system.vo.UserVo;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface SysUserService {
     UserVo getVoById(Long id);
@@ -17,7 +16,7 @@ public interface SysUserService {
 
     void delete(Long id);
 
-    UserDetail getSysUser(String username);
+    UserDetail loadUserByUsername(String username);
 
     void register(UserDetail userDetail);
 }

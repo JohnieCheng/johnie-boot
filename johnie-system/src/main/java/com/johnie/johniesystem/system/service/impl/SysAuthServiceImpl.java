@@ -44,7 +44,8 @@ public class SysAuthServiceImpl implements SysAuthService {
         UserDetail userDetail = UserDetail.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .authoritySet(new HashSet<>(Arrays.asList("sys")))
+                .departmentNo(request.getDepartmentNo())
+                .roleNo(request.getRoleNo())
                 .build();
         sysUserService.register(userDetail);
     }

@@ -5,7 +5,9 @@ Content-Type: application/json
 
 {
   "username": "johniecheng@gmail.com",
-  "password": "Cheng123456"
+  "password": "Cheng123456",
+  "departmentNo": "1001",
+  "roleNo": "10001"
 }
 
 ### 注册2
@@ -14,7 +16,9 @@ Content-Type: application/json
 
 {
   "username": "johnieZhang@gmail.com",
-  "password": "Cheng123456"
+  "password": "Cheng123456",
+  "departmentNo": "1001",
+  "roleNo": "10001"
 }
 
 ### 登录

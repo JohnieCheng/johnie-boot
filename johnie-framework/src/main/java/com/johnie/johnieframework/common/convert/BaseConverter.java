@@ -24,6 +24,7 @@ public interface BaseConverter<SOURCE, TARGET> {
      * 反向，映射同名属性
      */
     @InheritInverseConfiguration(name = "sourceToTarget")
+//    @Mapping(target = "createDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
     SOURCE targetToSource(TARGET var1);
 
     /**

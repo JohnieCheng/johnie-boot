@@ -31,6 +31,8 @@ public class UserDetail implements UserDetails {
     private Integer status;
     private Integer superAdmin;
     private LocalDateTime createDate;
+    private String departmentNo;
+    private String roleNo;
 
     /**
      * 数据权限范围
