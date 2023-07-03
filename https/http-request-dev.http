@@ -34,6 +34,23 @@ Content-Type: application/json
     client.global.set("accessToken", response.body["accessToken"]);
 %}
 
+### 更新用户
+< {%
+    request.variables.set("auth_token", client.global.get("accessToken"))
+
+%}
+PUT http://localhost:9090/api/v1/sys-user
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": 4,
+  "username": "johniecheng@gmail.com",
+  "password": "Cheng1234567",
+  "sysDepartmentNo": "1001",
+  "sysRoleNos": "10001"
+}
+
 ### 删除用户
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))

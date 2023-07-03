@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface SysAuthRepository extends BaseRepository<SysUser, Long> {
 
     @Meta(comment = "根据邮箱查找用户")
-    Optional<SysUser> findByEmail(String email);
+    Optional<SysUser> findByUsername(String email);
 }

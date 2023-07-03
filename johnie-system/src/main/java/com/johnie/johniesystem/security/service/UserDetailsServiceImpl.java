@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser sysUser = sysAuthRepository.findByEmail(username).
+        SysUser sysUser = sysAuthRepository.findByUsername(username).
                 orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return sysUserDetailsService.getUserDetails(sysUser);
     }

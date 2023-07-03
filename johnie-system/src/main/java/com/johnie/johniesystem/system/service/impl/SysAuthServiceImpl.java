@@ -1,6 +1,7 @@
 package com.johnie.johniesystem.system.service.impl;
 
 
+import com.johnie.johnieframework.common.exception.ServerException;
 import com.johnie.johnieframework.security.cache.TokenStoreCache;
 import com.johnie.johnieframework.security.user.UserDetail;
 import com.johnie.johnieframework.security.service.JwtService;
@@ -12,7 +13,9 @@ import com.johnie.johniesystem.system.vo.SysAuthResponse;
 import com.johnie.johniesystem.system.vo.RegisterUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +35,22 @@ public class SysAuthServiceImpl implements SysAuthService {
 
     @Override
     public SysAuthResponse login(AuthRequest request) {
-        UserDetail userDetail = sysUserDetailsService.loadUserByUsername(request.getUsername());
-        String jwt = jwtService.generateToken(userDetail);
-        tokenStoreCache.saveUser(jwt, userDetail);
-//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+//        UserDetail userDetail = sysUserDetailsService.loadUserByUsername(request.getUsername());
+        Authentication authentication;
+        try {
+            // 用户认证
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        } catch (BadCredentialsException e) {
+            throw new ServerException("用户名或密码错误");
+        }
+        // 用户信息
+        UserDetail user = (UserDetail) authentication.getPrincipal();
+        // 生成 accessToken
+        String jwt = jwtService.generateToken(user);
+        // 保存用户信息到缓存
+        tokenStoreCache.saveUser(jwt, user);
+        // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         return SysAuthResponse.builder().accessToken(jwt).build();
     }
 

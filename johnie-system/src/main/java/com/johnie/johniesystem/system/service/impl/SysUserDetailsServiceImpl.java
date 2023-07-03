@@ -3,6 +3,7 @@ package com.johnie.johniesystem.system.service.impl;
 import com.johnie.johnieframework.security.user.UserDetail;
 import com.johnie.johniesystem.system.convert.SysUserConvert;
 import com.johnie.johniesystem.system.entity.SysUser;
+import com.johnie.johniesystem.system.enums.UserStatusEnum;
 import com.johnie.johniesystem.system.service.SysUserDetailsService;
 import com.johnie.johniesystem.system.service.SysUserService;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,11 @@ public class SysUserDetailsServiceImpl implements SysUserDetailsService {
 //        if (user.getStatus() == UserStatusEnum.DISABLE.getValue()) {
 //            userDetail.setEnabled(false);
 //        }
+        userDetail.setAccountNonExpired(true);
+        userDetail.setAccountNonLocked(true);
+        userDetail.setEnabled(true);
+        userDetail.setCredentialsNonExpired(true);
+        userDetail.setAuthoritySet(user.getAuthoritySet());
 //
 //        // 数据权限范围
 //        List<Long> dataScopeList = getDataScope(userDetail);

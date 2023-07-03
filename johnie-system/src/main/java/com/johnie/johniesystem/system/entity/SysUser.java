@@ -9,6 +9,7 @@ import javax.management.relation.Role;
 import java.io.Serial;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 登录用户信息
@@ -45,4 +46,8 @@ public class SysUser extends AbstractAuditableBaseEntity<String> {
     private List<SysRole> sysRoles;
     @Version
     private long version;
+
+    public Set<String> getAuthoritySet() {
+        return this.sysRoles.stream().flatMap(sysRole -> sysRole.getSysPermissions().stream()).map(SysPermission::getExpression).collect(Collectors.toSet());
+    }
 }

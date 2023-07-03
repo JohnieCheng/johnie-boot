@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,17 +59,17 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    @Transactional
     public UserVo update(UserDTO dto) {
-        SysUser sysUser = sysUserConvert.toEntity(dto);
-        Long id = dto.getId();
-        SysUser sysUserEntity =
-                userRepository
-                        .findById(id)
-                        .orElseThrow(() -> new ServerException(ErrorCode.USER_ACCOUNT_NOT_EXIST));
-        //    BeanUtils.copyProperties(dto,userEntity);
-//    sysUserEntity.setRole(sysUser.getRole());
-//    sysUserEntity.setEmployee(sysUser.getEmployee());
-        return sysUserConvert.toVo(sysUserEntity);
+        Set<String> roleNoSet = Arrays.stream(dto.getSysRoleNos().split(",")).collect(Collectors.toSet());
+        String departmentNo = dto.getSysDepartmentNo();
+        List<SysRole> sysRoles = sysRoleService.findByNoIn(roleNoSet);
+        SysDepartment sysDepartment = sysDepartmentService.findByNo(departmentNo);
+        SysUser sysUser = userRepository.findById(dto.getId())
+                .orElseThrow(() -> new ServerException(ErrorCode.USER_ACCOUNT_NOT_EXIST));
+        sysUser.setSysRoles(sysRoles);
+        sysUser.setSysDepartment(sysDepartment);
+        return sysUserConvert.toVo(sysUser);
     }
 
     @Override
