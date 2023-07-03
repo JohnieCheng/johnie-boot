@@ -1,5 +1,6 @@
 package com.johnie.johniesystem.system.controller;
 
+import com.johnie.johnieframework.common.exception.ErrorCode;
 import com.johnie.johniesystem.system.service.SysAuthService;
 import com.johnie.johniesystem.system.vo.AuthRequest;
 import com.johnie.johniesystem.system.vo.SysAuthResponse;
@@ -21,7 +22,7 @@ public class SysAuthController {
     @PostMapping("register")
     public ResponseEntity<Object> register(@RequestBody RegisterUserVo request) {
         service.register(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(ErrorCode.REGISTER_SUCCESS.getMsg());
     }
 
     @PostMapping("login")
