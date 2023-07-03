@@ -18,8 +18,9 @@ import lombok.*;
 public class SysPermission extends AbstractAuditableBaseEntity<String> {
   @Serial
   private static final long serialVersionUID = -1210111881048045230L;
-  private String expression;
+  private String no;
   private String name;
+  private String expression;
 
   @ToString.Exclude
   @ManyToMany(
