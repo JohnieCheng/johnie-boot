@@ -9,4 +9,6 @@ public interface SysAuthService {
   void register(RegisterUserVo request);
 
   SysAuthResponse login(AuthRequest request);
+
+    void logout(String jwt);
 }

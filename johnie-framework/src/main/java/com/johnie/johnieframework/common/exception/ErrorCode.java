@@ -88,8 +88,16 @@ public enum ErrorCode {
     /**
      * 没有权限
      */
-    NO_PERMISSION(3001, "没有权限"), REGISTER_SUCCESS(2010, "注册成功");
+    NO_PERMISSION(3001, "没有权限"),
+    /**
+     * 注册成功
+     */
+    REGISTER_SUCCESS(2010, "注册成功"),
 
+    /**
+     * 账号退出成功
+     */
+    LOGOUT_SUCCESS(2011, "退出成功");
     private final int code;
     private final String msg;
 }

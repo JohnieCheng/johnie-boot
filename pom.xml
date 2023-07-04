@@ -130,14 +130,14 @@
                     <target>17</target>
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                        <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <showWarnings>true</showWarnings>
@@ -147,11 +147,17 @@
                         </compilerArg>
                         <compilerArg>
                             <!--   以spring注入的方式访问mapper-->
-                            -Amapstruct.defaultComponentModel=spring
+                            -Amapstruct.defaultComponentModel= spring
                         </compilerArg>
                         <compilerArg>
                             <!--   注入方式 默认是字段注入 设置为constructor是构造器注入-->
                             -Amapstruct.defaultInjectionStrategy=field
+                        </compilerArg>
+                        <compilerArg>
+                            -Amapstruct.unmappedTargetPolicy=IGNORE
+                        </compilerArg>
+                        <compilerArg>
+                            -Amapstruct.unmappedSourcePolicy=IGNORE
                         </compilerArg>
                     </compilerArgs>
                 </configuration>

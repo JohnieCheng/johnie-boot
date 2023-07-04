@@ -19,10 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
 @Service
 @RequiredArgsConstructor
 public class SysAuthServiceImpl implements SysAuthService {
@@ -63,5 +59,18 @@ public class SysAuthServiceImpl implements SysAuthService {
                 .roleNo(request.getRoleNo())
                 .build();
         sysUserService.register(userDetail);
+    }
+
+    @Override
+    public void logout(String accessToken) {
+        // 用户信息
+        UserDetail user = tokenStoreCache.getUser(accessToken);
+
+        // 删除用户信息
+        tokenStoreCache.deleteUser(accessToken);
+
+        // 保存登录日志
+//        sysLogLoginService.save(user.getUsername(), Constant.SUCCESS, LoginOperationEnum.LOGOUT_SUCCESS.getValue());
+
     }
 }

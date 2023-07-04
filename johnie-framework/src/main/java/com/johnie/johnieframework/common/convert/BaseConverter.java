@@ -1,23 +1,17 @@
 package com.johnie.johnieframework.common.convert;
 
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.MapperConfig;
-import org.mapstruct.Mapping;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
+import org.mapstruct.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
-@MapperConfig
+@MapperConfig(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BaseConverter<SOURCE, TARGET> {
 
     /**
      * 映射同名属性
      */
-    @Mapping(target = "createDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
+//    @Mapping(target = "createDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
     TARGET sourceToTarget(SOURCE var1);
 
     /**

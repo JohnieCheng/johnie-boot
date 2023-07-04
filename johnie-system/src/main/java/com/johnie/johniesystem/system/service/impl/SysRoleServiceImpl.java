@@ -41,9 +41,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     public RoleVo addRole(RoleDTO roleDTO) {
         SysRole sysRole = sysRoleConvert.toEntity(roleDTO);
         Set<String> permissionNos = Arrays.stream(roleDTO.getPermissionNos().split(",")).collect(Collectors.toSet());
-        List<SysPermission> sysPermissions = sysPermissionRepository.findInNos(permissionNos);
+        List<SysPermission> sysPermissions = sysPermissionRepository.findByNoIn(permissionNos);
         sysRole.setSysPermissions(sysPermissions);
         SysRole savedRole = repository.save(sysRole);
-        return sysRoleConvert.toVo(savedRole);
+        return sysRoleConvert.sourceToTarget(savedRole);
     }
 }

@@ -28,7 +28,7 @@ import java.util.*;
 
 
 @Slf4j
-@Service
+//@Service
 public class BaseServiceImpl<V, E> implements BaseService<V, E> {
 
     @Resource

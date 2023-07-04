@@ -1,39 +1,3 @@
-
-### 注册1
-POST http://localhost:9090/api/v1/auth/register
-Content-Type: application/json
-
-{
-  "username": "johniecheng@gmail.com",
-  "password": "Cheng123456",
-  "departmentNo": "1001",
-  "roleNo": "10001"
-}
-
-### 注册2
-POST http://localhost:9090/api/v1/auth/register
-Content-Type: application/json
-
-{
-  "username": "johnieZhang@gmail.com",
-  "password": "Cheng123456",
-  "departmentNo": "1001",
-  "roleNo": "10001"
-}
-
-### 登录
-POST http://localhost:9090/api/v1/auth/login
-Content-Type: application/json
-
-{
-  "username": "johniecheng@gmail.com",
-  "password": "Cheng123456"
-}
-
-> {%
-    client.global.set("accessToken", response.body["accessToken"]);
-%}
-
 ### 更新用户
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
