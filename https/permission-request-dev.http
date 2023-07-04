@@ -1,0 +1,13 @@
+### 添加权限
+< {%
+    request.variables.set("auth_token", client.global.get("accessToken"))
+%}
+POST http://localhost:9090/api/v1/sys-permission
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "no": "1",
+  "name": "删除用户",
+  "expression": "sys::user::delete"
+}

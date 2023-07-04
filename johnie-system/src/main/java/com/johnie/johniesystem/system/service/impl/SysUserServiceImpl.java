@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +72,8 @@ public class SysUserServiceImpl implements SysUserService {
                 .orElseThrow(() -> new ServerException(ErrorCode.USER_ACCOUNT_NOT_EXIST));
         sysUser.setSysRoles(sysRoles);
         sysUser.setSysDepartment(sysDepartment);
-        return sysUserConvert.toVo(sysUser);
+        SysUser save = userRepository.saveAndFlush(sysUser);
+        return sysUserConvert.toVo(save);
     }
 
     @Override

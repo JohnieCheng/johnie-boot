@@ -1,7 +1,6 @@
 ### 更新用户
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
-
 %}
 PUT http://localhost:9090/api/v1/sys-user
 Authorization: Bearer {{auth_token}}
@@ -10,36 +9,39 @@ Content-Type: application/json
 {
   "id": 4,
   "username": "johniecheng@gmail.com",
-  "password": "Cheng1234567",
+  "password": "Cheng123456",
   "sysDepartmentNo": "1001",
-  "sysRoleNos": "10001"
+  "sysRoleNos": "10001",
+  "createBy": "123",
+  "updateBy": "123123",
+  "version": 0
 }
-
-### 删除用户
-< {%
-    request.variables.set("auth_token", client.global.get("accessToken"))
-
-%}
-DELETE http://localhost:9090/api/v1/sys-user/2
-Authorization: Bearer {{auth_token}}
-Content-Type: application/json
 
 ### 添加用户
 < {%
     request.variables.set("auth_token", client.global.get("accessToken"))
 %}
-POST http://localhost:9090/api/v1/sysUser
+POST http://localhost:9090/api/v1/sys-user
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-  "email": "johniecheng1@gmail.com",
+  "username": "johniecheng1@gmail.com",
   "password": "$2a$10$54CNo2AiAmSpTIEeAZgOJ.pZTwXTSCruHsp24kXtQMBUkLY9yMk/O",
   "role": [],
+  "status": 1,
   "version": 0,
   "id": null,
-  "createBy": "johnie",
+  "createBy": "",
   "createDate": 1681117610550,
-  "updateBy": "johnie",
+  "updateBy": "",
   "updateDate": 1681117610550
 }
+
+### 删除用户
+< {%
+    request.variables.set("auth_token", client.global.get("accessToken"))
+%}
+DELETE http://localhost:9090/api/v1/sys-user/2
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
